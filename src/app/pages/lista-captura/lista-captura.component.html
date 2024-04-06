@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <form class="form-inline">
+          <fieldset class="form-group col-sm-11"></fieldset>
+          <fieldset class="form-group col-sm-1">
+            <br>
+            <a class="btn btn-primary" [routerLink]="['']">Agregar</a>
+          </fieldset>
+        </form>
+        <br>
+        <table class="table table-striped">
+          <thead>
+            <tr class="row">
+              <th class="col-sm-1"> ID </th>
+              <th class="col-sm-1"> Nombre </th>
+              <th class="col-sm-1"> Nombre empresa </th>
+              <th class="col-sm-2"> Correo</th>
+              <th class="col-sm-2"> Telefono</th>
+              <th class="col-sm-2"> Categoria</th>
+              <th class="col-sm-2"> Mensaje</th>
+              <th class="col-sm-1"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Infos of Info | async" class="row">
+              <td class="col-sm-1"><i>{{ Infos.idContacto }}</i></td>
+              <td class="col-sm-1"><i>{{ Infos.NombreCompleto }}</i></td>
+              <td class="col-sm-1"><i>{{ Infos.NombreEmpresa }}</i></td>
+              <td class="col-sm-2"><i>{{ Infos.CorreoElectronico }}</i></td>
+              <td class="col-sm-2"><i>{{ Infos.Telefono }}</i></td>
+              <td class="col-sm-2"><i>{{ Infos.Categoria }}</i></td>
+              <td class="col-sm-2"><i>{{ Infos.Mensaje }}</i></td>
+              <td class="col-sm-1">
+                <fieldset class="form-group col-sm-1">
+                  <a class="btn btn-danger" (click)="eliminarDatos(Infos.idContacto)">Borrar</a>
+                </fieldset>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

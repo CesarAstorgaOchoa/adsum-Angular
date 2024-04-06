@@ -25,14 +25,14 @@
     <div class="form-group">
       <label>Correo electrónico</label>
 
-      <input type="email" formControlName="Correo" class="form-control">
+      <input type="email" formControlName="CorreoElectronico" class="form-control">
 
-      <div class="alert alert-danger mt-2" [hidden]=" Correo.valid || Correo.pristine">
-        <span *ngIf="Correo.errors?.['required']">
+      <div class="alert alert-danger mt-2" [hidden]=" CorreoElectronico.valid || CorreoElectronico.pristine">
+        <span *ngIf="CorreoElectronico.errors?.['required']">
           El correo es obligatorio
         </span>
 
-        <span *ngIf="Correo.errors?.['email']">
+        <span *ngIf="CorreoElectronico.errors?.['email']">
           El correo debe ser valido
         </span>
       </div>
@@ -91,4 +91,5 @@
       Enviar
     </button>
   </form>
+      <a class="btn btn-primary" [routerLink]="['/lista']">Listado</a>
 </section>

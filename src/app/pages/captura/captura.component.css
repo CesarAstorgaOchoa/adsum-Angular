@@ -22,3 +22,12 @@ button{
     margin-top: 20px;
     font-weight: bold;
 }
+a{
+    margin-top: -66px;
+    margin-left: 95px;
+    width: 87px;
+    font-weight: bold;
+}
+textarea{
+    resize: none;
+}

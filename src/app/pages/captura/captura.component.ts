@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
+import { Component} from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DatosService } from '../../shared/datos.service';
 import { datosCapturaModel } from '../../shared/datosCaptura.model';
 import { HttpClientModule} from '@angular/common/http';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-captura',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, HttpClientModule,],
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule, RouterLink],
   templateUrl: './captura.component.html',
   styleUrl: './captura.component.css'
 })
-export class CapturaComponent {
+export class CapturaComponent{
 
-  constructor(private fb: FormBuilder, private datosService: DatosService){
+  constructor(private fb: FormBuilder, private datosService: DatosService,
+              private route: ActivatedRoute, private router: Router
+  ){
 
   }
 
@@ -26,8 +29,8 @@ export class CapturaComponent {
     return this.formCaptura.get('NombreEmpresa') as FormControl
   }
 
-  get Correo(){
-    return this.formCaptura.get('Correo') as FormControl
+  get CorreoElectronico(){
+    return this.formCaptura.get('CorreoElectronico') as FormControl
   }
 
   get Telefono(){
@@ -45,27 +48,26 @@ export class CapturaComponent {
   formCaptura = this.fb.group({
     'NombreCompleto': ['', Validators.required],
     'NombreEmpresa' : ['', Validators.required],
-    'Correo' : ['', [Validators.required, Validators.email]],
+    'CorreoElectronico' : ['', [Validators.required, Validators.email]],
     'Telefono' : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^([0-9])*$/)]],
     'Categoria' : ['', Validators.required],
     'Mensaje' : ['', Validators.required]
   })
 
-
   procesar(){
-    console.log(this.formCaptura.value.NombreCompleto)
 
-    let datosCaptura: datosCapturaModel = {
-      NombreCompleto : this.formCaptura.value.NombreCompleto,
-      NombreEmpresa : this.formCaptura.value.NombreEmpresa,
-      Correo : this.formCaptura.value.Correo,
-      Telefono : this.formCaptura.value.Telefono,
-      Categoria: this.formCaptura.value.Categoria,
-      Mensaje: this.formCaptura.value.Mensaje
-    }
+      let datosCaptura = new datosCapturaModel(
+      '',
+      this.formCaptura.value.NombreCompleto,
+      this.formCaptura.value.NombreEmpresa,
+      this.formCaptura.value.CorreoElectronico,
+      this.formCaptura.value.Telefono,
+      this.formCaptura.value.Categoria,
+      this.formCaptura.value.Mensaje)    
 
     this.datosService.agregaCaptura(datosCaptura).subscribe(() => {
-      this.formCaptura.reset()
+    this.formCaptura.reset()
+
     },(error) => {
       alert("Error al enviar el formulario")
     })
