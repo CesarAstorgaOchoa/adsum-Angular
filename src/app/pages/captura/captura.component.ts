@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DatosService } from '../../shared/datos.service';
+import { datosCapturaModel } from '../../shared/datosCaptura.model';
+import { HttpClientModule} from '@angular/common/http';
 
 @Component({
   selector: 'app-captura',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule,],
   templateUrl: './captura.component.html',
   styleUrl: './captura.component.css'
 })
 export class CapturaComponent {
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private datosService: DatosService){
 
   }
 
@@ -48,13 +51,21 @@ export class CapturaComponent {
     'Mensaje' : ['', Validators.required]
   })
 
- /* formCaptura = new FormGroup({
-    'NombreCompleto' : new FormControl('', Validators.required),
-  })*/
 
   procesar(){
-    console.log(this.formCaptura.value)
+    console.log(this.formCaptura.value.NombreCompleto)
+
+    let datosCaptura: datosCapturaModel = {
+      NombreCompleto : this.formCaptura.value.NombreCompleto,
+      NombreEmpresa : this.formCaptura.value.NombreEmpresa,
+      Correo : this.formCaptura.value.Correo,
+      Telefono : this.formCaptura.value.Telefono,
+      Categoria: this.formCaptura.value.Categoria,
+      Mensaje: this.formCaptura.value.Mensaje
+    }
+
+    this.datosService.agregaCaptura(datosCaptura).subscribe(data => {alert(data)})
+    
   }
 
-  //NombreCompleto = new FormControl('', Validators.required)
 }
