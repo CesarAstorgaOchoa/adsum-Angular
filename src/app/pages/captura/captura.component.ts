@@ -64,7 +64,11 @@ export class CapturaComponent {
       Mensaje: this.formCaptura.value.Mensaje
     }
 
-    this.datosService.agregaCaptura(datosCaptura).subscribe(data => {alert(data)})
+    this.datosService.agregaCaptura(datosCaptura).subscribe(() => {
+      this.formCaptura.reset()
+    },(error) => {
+      alert("Error al enviar el formulario")
+    })
     
   }
 
