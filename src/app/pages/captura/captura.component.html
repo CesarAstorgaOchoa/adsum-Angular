@@ -1,45 +1,93 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Captura</title>
-</head>
 <header>
-    <p>contacto de soporte !</p>
+  <p>Contacto de soporte !</p>
 </header>
-<body>
-    <form action="">
+<section>
+  <form [formGroup]="formCaptura" (ngSubmit)="procesar()">
     <div class="form-group">
-      <label>Nombre completo</label>
-      <input type="text" name="NombreCompleto" id="NombreCompleto">
+      <label class="form-label">Nombre completo</label>
+
+      <input type="text" formControlName="NombreCompleto" class="form-control">
+
+      <div class="alert alert-danger mt-2" [hidden]="NombreCompleto.valid || NombreCompleto.pristine">
+        El nombre es obligatorio
+      </div>
     </div>
     <div class="form-group">
-      <label>Nombre de la empresa</label>
-      <input type="text" name="NombreEmpresa" id="NombreEmpresa">
+      <label class="form-label">Nombre de la empresa</label>
+
+      <input type="text" formControlName="NombreEmpresa" class="form-control">
+
+      <div class="alert alert-danger mt-2" [hidden]=" NombreEmpresa.valid || NombreEmpresa.pristine">
+        El nombre de la empresa es obligatorio
+      </div>
+
     </div>
     <div class="form-group">
       <label>Correo electrónico</label>
-      <input type="text" name="Correo" id="Correo">
+
+      <input type="email" formControlName="Correo" class="form-control">
+
+      <div class="alert alert-danger mt-2" [hidden]=" Correo.valid || Correo.pristine">
+        <span *ngIf="Correo.errors?.['required']">
+          El correo es obligatorio
+        </span>
+
+        <span *ngIf="Correo.errors?.['email']">
+          El correo debe ser valido
+        </span>
+      </div>
+
     </div>
-    <div class="form-group">
-      <label>Teléfono</label>
-      <input type="text" name="Telefono" id="Telefono">
+    <article>
+      <div class="form-group">
+        <label>Teléfono</label>
+
+        <input type="tel" formControlName="Telefono" class="form-control">
+
+      </div>
+      <div class="form-group">
+        <label>Categoría</label>
+
+        <select class="form-select" formControlName="Categoria">
+          <option value="Facturación">Facturación</option>
+          <option value="Soporte Técnico">Soporte Técnico</option>
+          <option value="Ventas">Ventas</option>
+          <option value="Información general">Información general</option>
+        </select>
+
+      </div>
+    </article>
+
+    <div class="alert alert-danger mt-2" [hidden]=" Telefono.valid || Telefono.pristine">
+      <span *ngIf="Telefono.errors?.['required']">
+        El telefono es obligatorio
+      </span>
+
+      <span *ngIf="Telefono.errors?.['minlength'] || Telefono.errors?.['maxlength']">
+        10 caracteres
+      </span>
+
+      <span *ngIf="Telefono.errors?.['pattern']">
+        Solo numeros
+      </span>
     </div>
-    <div class="form-group">
-      <label>Categoría</label>
-      <select class="form-control" name="Categoria" id="Categoria">
-        <option value="Facturación">Facturación</option>
-        <option value="Soporte Técnico">Soporte Técnico</option>
-        <option value="Ventas">Ventas</option>
-        <option value="Información general">Información general</option>
-      </select>
+
+    <div class="alert alert-danger mt-2" [hidden]=" Categoria.valid || Categoria.pristine">
+      La categoria es obligatoria
     </div>
+
     <div class="form-group">
       <label>Mensaje</label>
-      <textarea name="Mensaje" id="Mensaje" cols="10" rows="3"></textarea>
+
+      <textarea formControlName="Mensaje" cols="10" rows="3" class="form-control"></textarea>
+
+      <div class="alert alert-danger mt-2" [hidden]=" Mensaje.valid || Mensaje.pristine">
+        El mensaje es obligatorio
+      </div>
+
     </div>
-      <button>Enviar</button>
-    </form>
-</body>
-</html>
+    <button class="btn btn-success" [disabled]="formCaptura.invalid">
+      Enviar
+    </button>
+  </form>
+</section>
